@@ -1,0 +1,3 @@
+Support for vb.net highlighting is incomplete. The parser cannot handle variable names containing underscores or interpolated strings.
+
+
