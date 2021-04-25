@@ -81,8 +81,4 @@ Public Class FindWindow
          HandleError(ExceptionO)
       End Try
    End Sub
-
-   Private Sub FindWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-   End Sub
 End Class

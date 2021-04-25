@@ -221,7 +221,7 @@ Public Class InterfaceWindow
       Try
          Dim NewItem As ToolStripMenuItem = Nothing
 
-         If File.Exists(Locations().SettingsPath) Then LoadSettings(Locations().SettingsPath)
+         If File.Exists(Locations().SettingsPath) Then Settings = LoadSettings(Locations().SettingsPath)
 
          ProcessCommandLine()
 
