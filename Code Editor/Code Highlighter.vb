@@ -155,31 +155,33 @@ Public Module CodeHighlighterModule
                   End If
                End If
 
-               If StringLiteral Is Nothing Then
-                  If CommentStart Is Nothing Then
-                     CommentStart = GetIndex(Template.CommentStart, .Text.Substring(Position), CompareMethod)
-                     If Not CommentStart Is Nothing Then Offset = Position
-                  Else
-                     If .Text.Substring(Position).StartsWith(Template.CommentEnd(CommentStart.Value), CompareMethod) Then
-                        Fragment = Template.CommentEnd(CommentStart.Value)
-                        .Select(Offset, (Position - Offset) + 1)
-                        .SelectionColor = Settings.CommentColor
-                        CommentStart = Nothing
-                        Offset = 0
-                        PreviousCharacter = Nothing
-                        Position += Fragment.Length
+               If Position < .Text.Length Then
+                  If StringLiteral Is Nothing Then
+                     If CommentStart Is Nothing Then
+                        CommentStart = GetIndex(Template.CommentStart, .Text.Substring(Position), CompareMethod)
+                        If Not CommentStart Is Nothing Then Offset = Position
+                     Else
+                        If .Text.Substring(Position).StartsWith(Template.CommentEnd(CommentStart.Value), CompareMethod) Then
+                           Fragment = Template.CommentEnd(CommentStart.Value)
+                           .Select(Offset, (Position - Offset) + 1)
+                           .SelectionColor = Settings.CommentColor
+                           CommentStart = Nothing
+                           Offset = 0
+                           PreviousCharacter = Nothing
+                           Position += Fragment.Length
+                        End If
                      End If
                   End If
-               End If
 
-               If CommentStart Is Nothing AndAlso StringLiteral Is Nothing Then
-                  Keyword = GetIndex(Template.KeyWords, .Text.Substring(Position), CompareMethod, IsKeyword:=True)
-                  If Keyword IsNot Nothing Then
-                     If PreviousCharacter = Nothing OrElse Not Char.IsLetterOrDigit(PreviousCharacter) Then
-                        Fragment = Template.KeyWords(Keyword.Value)
-                        .Select(Position, Fragment.Length)
-                        .SelectionColor = Settings.KeyWordColor
-                        Position += Fragment.Length
+                  If CommentStart Is Nothing AndAlso StringLiteral Is Nothing Then
+                     Keyword = GetIndex(Template.KeyWords, .Text.Substring(Position), CompareMethod, IsKeyword:=True)
+                     If Keyword IsNot Nothing Then
+                        If PreviousCharacter = Nothing OrElse Not Char.IsLetterOrDigit(PreviousCharacter) Then
+                           Fragment = Template.KeyWords(Keyword.Value)
+                           .Select(Position, Fragment.Length)
+                           .SelectionColor = Settings.KeyWordColor
+                           Position += Fragment.Length
+                        End If
                      End If
                   End If
                End If
@@ -187,6 +189,12 @@ Public Module CodeHighlighterModule
                If Position < .Text.Length Then PreviousCharacter = .Text.Chars(Position)
                Position += 1
             Loop
+
+            If CommentStart IsNot Nothing Then
+               .Select(Offset, .Text.Length - Offset)
+               .SelectionColor = Settings.CommentColor
+               CommentStart = Nothing
+            End If
 
             Target.Text = .Text
             Target.Rtf = .Rtf
@@ -198,6 +206,8 @@ Public Module CodeHighlighterModule
          End With
       Catch ExceptionO As Exception
          HandleError(ExceptionO)
+      Finally
+         Target.Parent.UseWaitCursor = False
       End Try
    End Sub
 
