@@ -2,6 +2,7 @@
 <Code>
  <Language>Quick Basic</Language>
  <CaseSensitive>False</CaseSensitive>
+ <Delimiters> (,):&#xA;</Delimiters>
  <CommentStart>'</CommentStart>
  <CommentEnd>&#xA;</CommentEnd>
  <CommentStart>REM </CommentStart>

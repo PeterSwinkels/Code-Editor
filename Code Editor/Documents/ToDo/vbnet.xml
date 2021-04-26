@@ -2,6 +2,7 @@
 <Code>
  <Language>Visual Basic.net</Language>
  <CaseSensitive>False</CaseSensitive>
+ <Delimiters> (.,):&#xA;</Delimiters>
  <CommentStart>'</CommentStart>
  <CommentEnd>&#xA;</CommentEnd>
  <CommentStart>REM </CommentStart>
@@ -147,7 +148,6 @@ String
 Structure
 Sub
 SyncLock
-Text
 Then
 Throw
 To
