@@ -6,7 +6,6 @@ Option Strict On
 
 Imports System
 Imports System.Collections.Generic
-Imports System.Drawing
 Imports System.Environment
 Imports System.IO
 Imports System.Windows.Forms
@@ -19,6 +18,7 @@ Public Module CodeHighlighterModule
       Public CaseSensitive As Boolean           'Indicates whether the code is case sensitive.
       Public CommentEnd As List(Of String)      'Defines the end of comment markers.
       Public CommentStart As List(Of String)    'Defines the start of comment markers.
+      Public Delimiters As String               'Defines the characters that delimit keywords.
       Public KeyWords As List(Of String)        'Defines the list of keywords.
       Public Language As String                 'Defines the name of the language defined.
       Public StringLiterals As List(Of String)  'Defines the string literal markers.
@@ -33,6 +33,7 @@ Public Module CodeHighlighterModule
             .CaseSensitive = False
             .CommentEnd = New List(Of String)
             .CommentStart = New List(Of String)
+            .Delimiters = ""
             .KeyWords = New List(Of String)
             .Language = Nothing
             .StringLiterals = New List(Of String)
@@ -72,6 +73,7 @@ Public Module CodeHighlighterModule
                   .WriteStartElement("Code")
                   .WriteElementString("Language", NewLine)
                   .WriteElementString("CaseSensitive", CStr(False))
+                  .WriteElementString("Delimiters", NewLine)
                   .WriteElementString("CommentEnd", NewLine)
                   .WriteElementString("CommentStart", NewLine)
                   .WriteElementString("Keywords", NewLine)
@@ -92,12 +94,12 @@ Public Module CodeHighlighterModule
    End Function
 
    'This procedure searches the specified list for the specified text.
-   Private Function GetIndex(SearchList As List(Of String), Code As String, CompareMethod As StringComparison, Optional IsKeyword As Boolean = False) As Integer?
+   Private Function GetIndex(SearchList As List(Of String), Code As String, CompareMethod As StringComparison, Optional Delimiters As String = Nothing, Optional IsKeyword As Boolean = False) As Integer?
       Try
          For Index As Integer = 0 To SearchList.Count - 1
             If Code.StartsWith(SearchList(Index), CompareMethod) Then
                If IsKeyword Then
-                  If Code.Length = SearchList(Index).Length OrElse (Not Char.IsLetterOrDigit(Code.Chars(SearchList(Index).Length))) Then
+                  If Code.Length = SearchList(Index).Length OrElse Delimiters.Contains(Code.Chars(SearchList(Index).Length)) Then
                      Return Index
                   End If
                Else
@@ -150,7 +152,7 @@ Public Module CodeHighlighterModule
                         StringLiteral = Nothing
                         Offset = 0
                         PreviousCharacter = Nothing
-                        Position += (Fragment.Length + 1)
+                        Position += Fragment.Length
                      End If
                   End If
                End If
@@ -174,7 +176,7 @@ Public Module CodeHighlighterModule
                   End If
 
                   If CommentStart Is Nothing AndAlso StringLiteral Is Nothing Then
-                     Keyword = GetIndex(Template.KeyWords, .Text.Substring(Position), CompareMethod, IsKeyword:=True)
+                     Keyword = GetIndex(Template.KeyWords, .Text.Substring(Position), CompareMethod, Template.Delimiters, IsKeyword:=True)
                      If Keyword IsNot Nothing Then
                         If PreviousCharacter = Nothing OrElse Not Char.IsLetterOrDigit(PreviousCharacter) Then
                            Fragment = Template.KeyWords(Keyword.Value)
@@ -233,6 +235,7 @@ Public Module CodeHighlighterModule
                   .ReadStartElement("Code")
                   NewTemplate.Language = .ReadElementString("Language")
                   NewTemplate.CaseSensitive = CBool(.ReadElementString("CaseSensitive"))
+                  NewTemplate.Delimiters = .ReadElementString("Delimiters")
                   Do Until .EOF
                      .Read()
                      Select Case .NodeType
