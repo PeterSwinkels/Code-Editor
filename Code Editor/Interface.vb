@@ -349,7 +349,7 @@ Public Class InterfaceWindow
    End Sub
 
    'This procedure gives the command to print the current document.
-   Private Sub PrintMenu_Click(sender As System.Object, e As System.EventArgs) Handles PrintMenu.Click
+   Private Sub PrintMenu_Click(sender As Object, e As EventArgs) Handles PrintMenu.Click
       Try
          With New PrintDialog
             If .ShowDialog() = DialogResult.OK Then

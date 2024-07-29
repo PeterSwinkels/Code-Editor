@@ -19,7 +19,8 @@ Public Module CodeHighlighterModule
       Public CommentEnd As List(Of String)      'Defines the end of comment markers.
       Public CommentStart As List(Of String)    'Defines the start of comment markers.
       Public Delimiters As String               'Defines the characters that delimit keywords.
-      Public KeyWords As List(Of String)        'Defines the list of keywords.
+      Public EscapedStrings As Boolean          'Indicates whether escaped strings are supported.
+      Public Keywords As List(Of String)        'Defines the list of keywords.
       Public Language As String                 'Defines the name of the language defined.
       Public StringLiterals As List(Of String)  'Defines the string literal markers.
    End Structure
@@ -74,6 +75,7 @@ Public Module CodeHighlighterModule
                   .WriteElementString("Language", NewLine)
                   .WriteElementString("CaseSensitive", CStr(False))
                   .WriteElementString("Delimiters", NewLine)
+                  .WriteElementString("EscapedStrings", CStr(False))
                   .WriteElementString("CommentEnd", NewLine)
                   .WriteElementString("CommentStart", NewLine)
                   .WriteElementString("Keywords", NewLine)
@@ -93,7 +95,7 @@ Public Module CodeHighlighterModule
       Return Nothing
    End Function
 
-   'This procedure searches the specified list for the specified text.
+   'This procedure searches the specified code for the specified items.
    Private Function GetIndex(SearchList As List(Of String), Code As String, CompareMethod As StringComparison, Optional Delimiters As String = Nothing, Optional IsKeyword As Boolean = False) As Integer?
       Try
          For Index As Integer = 0 To SearchList.Count - 1
@@ -126,6 +128,7 @@ Public Module CodeHighlighterModule
          Dim CurrentSelection As Integer = Target.SelectionStart
          Dim Fragment As String = Nothing
          Dim Keyword As New Integer?
+         Dim NextFragment As String = Nothing
          Dim Offset As Integer = 0
          Dim Position As Integer = 0
          Dim PreviousCharacter As Char = Nothing
@@ -143,15 +146,19 @@ Public Module CodeHighlighterModule
                If CommentStart Is Nothing Then
                   If StringLiteral Is Nothing Then
                      StringLiteral = GetIndex(Template.StringLiterals, .Text.Substring(Position), CompareMethod)
-                     If Not StringLiteral Is Nothing Then Offset = Position
+                     If StringLiteral IsNot Nothing Then Offset = Position
                   Else
                      If .Text.Substring(Position).StartsWith(Template.StringLiterals(StringLiteral.Value), CompareMethod) Then
                         Fragment = Template.StringLiterals(StringLiteral.Value)
-                        .Select(Offset, (Position - Offset) + 1)
-                        .SelectionColor = Settings.StringColor
-                        StringLiteral = Nothing
-                        Offset = 0
-                        PreviousCharacter = Nothing
+
+                        If Not (Template.EscapedStrings AndAlso Position < .Text.Length - (Fragment.Length * 2) - 1 AndAlso .Text.Substring(Position + Fragment.Length, Fragment.Length) = Fragment) Then
+                           .Select(Offset, (Position - Offset) + 1)
+                           .SelectionColor = Settings.StringColor
+                           StringLiteral = Nothing
+                           Offset = 0
+                           PreviousCharacter = Nothing
+                        End If
+
                         Position += Fragment.Length
                      End If
                   End If
@@ -161,7 +168,7 @@ Public Module CodeHighlighterModule
                   If StringLiteral Is Nothing Then
                      If CommentStart Is Nothing Then
                         CommentStart = GetIndex(Template.CommentStart, .Text.Substring(Position), CompareMethod)
-                        If Not CommentStart Is Nothing Then Offset = Position
+                        If CommentStart IsNot Nothing Then Offset = Position
                      Else
                         If .Text.Substring(Position).StartsWith(Template.CommentEnd(CommentStart.Value), CompareMethod) Then
                            Fragment = Template.CommentEnd(CommentStart.Value)
@@ -220,9 +227,8 @@ Public Module CodeHighlighterModule
 
          If TemplatePath = Nothing Then
             With New OpenFileDialog
-               .FileName = Path.GetFileName(TemplatePath)
+               .FileName = Nothing
                .Filter = "XML files (*.xml)|*.xml"
-               .InitialDirectory = Path.GetDirectoryName(TemplatePath)
                .Title = "Open highlighting template:"
                .ShowDialog()
                TemplatePath = .FileName
@@ -236,6 +242,8 @@ Public Module CodeHighlighterModule
                   NewTemplate.Language = .ReadElementString("Language")
                   NewTemplate.CaseSensitive = CBool(.ReadElementString("CaseSensitive"))
                   NewTemplate.Delimiters = .ReadElementString("Delimiters")
+                  NewTemplate.EscapedStrings = CBool(.ReadElementString("EscapedStrings"))
+
                   Do Until .EOF
                      .Read()
                      Select Case .NodeType
@@ -250,7 +258,7 @@ Public Module CodeHighlighterModule
                               Case "StringLiterals"
                                  NewTemplate.StringLiterals.Add(.ReadElementString)
                               Case Else
-                                 MessageBox.Show($"Unknown element ""{ .Name}"".", My.Application.Info.Title, MessageBoxButtons.OK)
+                                 MessageBox.Show($"Unknown element ""{ .Name}"".", My.Application.Info.Title, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
                            End Select
                      End Select
                   Loop

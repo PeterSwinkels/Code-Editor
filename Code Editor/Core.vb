@@ -47,7 +47,7 @@ Public Module CoreModule
       Public InterfacePosition As Point          'Defines the interface window's position.
       Public InterfaceSize As Size               'Defines the interface window's size.
       Public InterfaceState As FormWindowState   'Defines the interface window's state.
-      Public KeyWordColor As Color               'Defines the color used to highlight keywords.
+      Public KeywordColor As Color               'Defines the color used to highlight keywords.
       Public ShowErrors As Boolean               'Indicates whether the external program error pane is visible.
       Public ShowErrorsHeight As Integer         'Defines the external program's error pane height.
       Public ShowOutput As Boolean               'Indicates whether the external program output pane is visible.
