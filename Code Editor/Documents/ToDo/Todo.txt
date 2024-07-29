@@ -1,3 +1,0 @@
-Support for vb.net highlighting is incomplete. The parser cannot handle interpolated strings or strings containing quotes.
-
-
