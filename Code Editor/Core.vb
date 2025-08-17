@@ -65,7 +65,7 @@ Public Module CoreModule
       Try
          If DocumentO.Modified Then Return MessageBox.Show("This document has been modified since it was last saved. Save now?", My.Application.Info.Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -90,7 +90,7 @@ Public Module CoreModule
             .InterfaceState = FormWindowState.Normal
             .ShowOutputHeight = CInt(InterfaceWindow.TextBox.Height / 1.1)
             .ShowErrorsHeight = .ShowOutputHeight
-            .KeyWordColor = Color.Blue
+            .KeywordColor = Color.Blue
             .ShowErrors = False
             .ShowOutput = False
             .StringColor = Color.DarkRed
@@ -98,14 +98,14 @@ Public Module CoreModule
 
          Return NewSettings
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
    End Function
 
-   'This procedure handles any errors that occur.
-   Public Sub HandleError(ExceptionO As Exception)
+   'This procedure displays any exceptions that occur.
+   Public Sub DisplayException(ExceptionO As Exception)
       Try
          MessageBox.Show(ExceptionO.Message, My.Application.Info.Title, MessageBoxButtons.OK, MessageBoxIcon.Error)
       Catch
@@ -136,7 +136,7 @@ Public Module CoreModule
          TextBox.SelectedText = NewText.ToString().Substring(0, NewText.Length - NewLine.Length)
          TextBox.Select(SelectionStart, SelectionLength)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -170,7 +170,7 @@ Public Module CoreModule
             End With
          End If
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -201,7 +201,7 @@ Public Module CoreModule
 
                .ReadStartElement("Highlighting")
                NewSettings.CommentColor = Color.FromArgb(ToInt32(.ReadElementString("Comments"), fromBase:=16))
-               NewSettings.KeyWordColor = Color.FromArgb(ToInt32(.ReadElementString("Keywords"), fromBase:=16))
+               NewSettings.KeywordColor = Color.FromArgb(ToInt32(.ReadElementString("Keywords"), fromBase:=16))
                NewSettings.StringColor = Color.FromArgb(ToInt32(.ReadElementString("Strings"), fromBase:=16))
                .ReadEndElement()
 
@@ -222,7 +222,7 @@ Public Module CoreModule
 
          Return NewSettings
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -253,7 +253,7 @@ Public Module CoreModule
 
          Return If(DocumentO.PathO = Nothing, Nothing, File.ReadAllText(DocumentO.PathO))
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -266,7 +266,7 @@ Public Module CoreModule
 
          Return New LocationsStr With {.ProgramPath = ProgramPath, .SettingsPath = Path.Combine(Path.GetDirectoryName(ProgramPath), "Settings.xml")}
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -282,7 +282,7 @@ Public Module CoreModule
             DocumentO.Modified = False
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -301,7 +301,7 @@ Public Module CoreModule
             LoadTemplate(GetCommandLineArgs(2))
          End If
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -312,7 +312,7 @@ Public Module CoreModule
             Return $"{ .Title} v{ .Version} - by: { .CompanyName}"
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -341,7 +341,7 @@ Public Module CoreModule
             End If
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -373,7 +373,7 @@ Public Module CoreModule
 
                .WriteStartElement("Highlighting")
                .WriteElementString("Comments", $"{UnsavedSettings.CommentColor.ToArgb:X}")
-               .WriteElementString("Keywords", $"{UnsavedSettings.KeyWordColor.ToArgb:X}")
+               .WriteElementString("Keywords", $"{UnsavedSettings.KeywordColor.ToArgb:X}")
                .WriteElementString("Strings", $"{UnsavedSettings.StringColor.ToArgb:X}")
                .WriteEndElement()
 
@@ -395,7 +395,7 @@ Public Module CoreModule
             End With
          End Using
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -408,7 +408,7 @@ Public Module CoreModule
             Return .Color
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -424,7 +424,7 @@ Public Module CoreModule
             Return If(Button = DialogResult.Cancel, Nothing, .TextBox.Text)
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -439,7 +439,7 @@ Public Module CoreModule
 
          TextBox.SelectedText = NewText.ToString().Substring(0, NewText.Length - NewLine.Length)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -456,7 +456,7 @@ Public Module CoreModule
 
          UpdateStatusBar()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -471,7 +471,7 @@ Public Module CoreModule
             .StatusLabel.Text &= $"Row: {Row + 1}   Column: {(.TextBox.SelectionStart - .TextBox.GetFirstCharIndexFromLine(Row)) + 1}{New String(" "c, 5)}"
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 End Module

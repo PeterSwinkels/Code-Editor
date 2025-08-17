@@ -13,7 +13,7 @@ Public Class HighlightingColorsWindow
       Try
          Me.Close()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -23,7 +23,7 @@ Public Class HighlightingColorsWindow
          Settings.CommentColor = ShowColorDialog(Settings.CommentColor)
          UpdateWindow()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -32,7 +32,7 @@ Public Class HighlightingColorsWindow
       Try
          UpdateWindow()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -42,7 +42,7 @@ Public Class HighlightingColorsWindow
          Settings.KeyWordColor = ShowColorDialog(Settings.KeyWordColor)
          UpdateWindow()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -52,7 +52,7 @@ Public Class HighlightingColorsWindow
          Settings.StringColor = ShowColorDialog(Settings.StringColor)
          UpdateWindow()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -65,7 +65,7 @@ Public Class HighlightingColorsWindow
             StringColorBox.BackColor = .StringColor
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 End Class

@@ -14,7 +14,7 @@ Public Class FindWindow
       Try
          FindText(InterfaceWindow.TextBox, Backwards:=True)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -23,7 +23,7 @@ Public Class FindWindow
       Try
          Me.Close()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -51,7 +51,7 @@ Public Class FindWindow
             If Result < 0 Then .SelectionStart = If(Backwards, .Text.Length - 1, 0)
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -60,7 +60,7 @@ Public Class FindWindow
       Try
          FindText(InterfaceWindow.TextBox)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -69,7 +69,7 @@ Public Class FindWindow
       Try
          InterfaceWindow.TextBox.SelectedText = InterfaceWindow.TextBox.SelectedText.Replace(FindBox.Text, ReplaceBox.Text)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -78,7 +78,7 @@ Public Class FindWindow
       Try
          InterfaceWindow.TextBox.Text = InterfaceWindow.TextBox.Text.Replace(FindBox.Text, ReplaceBox.Text)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 End Class

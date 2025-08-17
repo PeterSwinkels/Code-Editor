@@ -15,7 +15,7 @@ Public Class InputDialog
          Me.DialogResult = DialogResult.Cancel
          Me.Close()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -26,7 +26,7 @@ Public Class InputDialog
          PromptLabel.MaximumSize = Panel.Size
          TextBox.Focus()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -36,7 +36,7 @@ Public Class InputDialog
          Me.DialogResult = DialogResult.OK
          Me.Close()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 End Class

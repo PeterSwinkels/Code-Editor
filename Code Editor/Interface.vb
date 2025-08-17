@@ -29,7 +29,7 @@ Public Class InterfaceWindow
             CaptureOutputMenu.Checked = .CaptureOutput
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -38,7 +38,7 @@ Public Class InterfaceWindow
       Try
          TextBox.SelectedText = TextBox.SelectedText.Replace(" ", ControlChars.Tab)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -47,7 +47,7 @@ Public Class InterfaceWindow
       Try
          TextBox.SelectedText = TextBox.SelectedText.Replace(ControlChars.Tab, " ")
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -56,7 +56,7 @@ Public Class InterfaceWindow
       Try
          TextBox.Copy()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -65,7 +65,7 @@ Public Class InterfaceWindow
       Try
          TextBox.Cut()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -81,7 +81,7 @@ Public Class InterfaceWindow
 
          UpdateInterface()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -105,7 +105,7 @@ Public Class InterfaceWindow
             End If
          Loop
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -122,7 +122,7 @@ Public Class InterfaceWindow
 
          UpdateInterface()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -131,7 +131,7 @@ Public Class InterfaceWindow
       Try
          FindWindow.ShowDialog()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -140,7 +140,7 @@ Public Class InterfaceWindow
       Try
          HighlightCode(TextBox, HighlightingTemplate)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -151,7 +151,7 @@ Public Class InterfaceWindow
 
          If Not HighlightingTemplate.Language = Nothing Then HighlightCode(TextBox, HighlightingTemplate)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -162,7 +162,7 @@ Public Class InterfaceWindow
 
          If NewIndentation IsNot Nothing Then Settings.Indentation = ToInt32(NewIndentation)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -171,7 +171,7 @@ Public Class InterfaceWindow
       Try
          MessageBox.Show(My.Application.Info.Description, ProgramInformation(), MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -194,7 +194,7 @@ Public Class InterfaceWindow
             SaveSettings(Locations().SettingsPath, Settings)
          End If
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -203,7 +203,7 @@ Public Class InterfaceWindow
       Try
          e.SuppressKeyPress = (TextBox.SelectedText.Length > 0 AndAlso e.KeyCode = Keys.Tab AndAlso Settings.Indentation > 0)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -212,7 +212,7 @@ Public Class InterfaceWindow
       Try
          If TextBox.SelectedText.Length > 0 AndAlso e.KeyCode = Keys.Tab AndAlso Settings.Indentation > 0 Then Indent(TextBox, My.Computer.Keyboard.ShiftKeyDown)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -265,7 +265,7 @@ Public Class InterfaceWindow
 
          UpdateInterface()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -276,7 +276,7 @@ Public Class InterfaceWindow
          TextBox.BackColor = Settings.BackgroundColor
          TextBox.ForeColor = Settings.ForegroundColor
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -287,7 +287,7 @@ Public Class InterfaceWindow
 
          LaunchExternalProgram()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -298,7 +298,7 @@ Public Class InterfaceWindow
          If Not HighlightingTemplate.Language = Nothing Then HighlightCode(TextBox, HighlightingTemplate)
          UpdateInterface()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -315,7 +315,7 @@ Public Class InterfaceWindow
             UpdateInterface()
          End If
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -324,7 +324,7 @@ Public Class InterfaceWindow
       Try
          OpenDocument()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -335,7 +335,7 @@ Public Class InterfaceWindow
 
          Process.Start(New ProcessStartInfo With {.FileName = DocumentO.PathO, .UseShellExecute = True})
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -344,7 +344,7 @@ Public Class InterfaceWindow
       Try
          TextBox.Paste()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -362,7 +362,7 @@ Public Class InterfaceWindow
             End If
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -399,7 +399,7 @@ Public Class InterfaceWindow
          LastLinePrinted = LineNumber
          e.HasMorePages = (LastLinePrinted < TextBox.Lines.GetUpperBound(0))
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -408,7 +408,7 @@ Public Class InterfaceWindow
       Try
          TextBox.Redo()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -417,7 +417,7 @@ Public Class InterfaceWindow
       Try
          Me.Close()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -427,7 +427,7 @@ Public Class InterfaceWindow
          SaveDocument(TextBox.Text, NoDialog:=True)
          UpdateInterface()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -437,7 +437,7 @@ Public Class InterfaceWindow
          SaveDocument(TextBox.Text)
          UpdateInterface()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -446,7 +446,7 @@ Public Class InterfaceWindow
       Try
          TextBox.SelectAll()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -460,7 +460,7 @@ Public Class InterfaceWindow
             Settings.DocumentFont = TextBox.Font
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -473,7 +473,7 @@ Public Class InterfaceWindow
             SetPaneVisibity()
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -486,7 +486,7 @@ Public Class InterfaceWindow
             SetPaneVisibity()
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -499,7 +499,7 @@ Public Class InterfaceWindow
          TextBox.DeselectAll()
          UpdateInterface()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -508,7 +508,7 @@ Public Class InterfaceWindow
       Try
          If e.Button = MouseButtons.Right Then EditContextMenuO.Show(TextBox, e.Location)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -523,7 +523,7 @@ Public Class InterfaceWindow
             OpenDocument(NoDialog:=True)
          End If
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -532,7 +532,7 @@ Public Class InterfaceWindow
       Try
          UpdateStatusBar()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -541,7 +541,7 @@ Public Class InterfaceWindow
       Try
          DocumentO.Modified = True
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -550,7 +550,7 @@ Public Class InterfaceWindow
       Try
          TrimLines(TextBox, TrimStart:=False)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -559,7 +559,7 @@ Public Class InterfaceWindow
       Try
          TrimLines(TextBox)
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -568,7 +568,7 @@ Public Class InterfaceWindow
       Try
          TextBox.Undo()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -579,7 +579,7 @@ Public Class InterfaceWindow
             If TypeOf Item Is ToolStripMenuItem AndAlso DirectCast(Item, ToolStripMenuItem).Text = DirectCast(sender, ToolStripMenuItem).Text Then DirectCast(Item, ToolStripMenuItem).PerformClick()
          Next Item
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -592,7 +592,7 @@ Public Class InterfaceWindow
             OutputErrorSplitterBox.Panel2Collapsed = Not .ShowErrors
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 End Class

@@ -13,7 +13,7 @@ Public Class InterfaceColorsWindow
       Try
          Me.Close()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -22,7 +22,7 @@ Public Class InterfaceColorsWindow
       Try
          UpdateWindow()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -32,7 +32,7 @@ Public Class InterfaceColorsWindow
          Settings.BackgroundColor = ShowColorDialog(Settings.BackgroundColor)
          UpdateWindow()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -42,7 +42,7 @@ Public Class InterfaceColorsWindow
          Settings.ForegroundColor = ShowColorDialog(Settings.ForegroundColor)
          UpdateWindow()
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 
@@ -54,7 +54,7 @@ Public Class InterfaceColorsWindow
             TextForegroundColorBox.BackColor = .ForegroundColor
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
    End Sub
 End Class

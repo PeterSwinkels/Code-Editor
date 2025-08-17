@@ -42,7 +42,7 @@ Public Module CodeHighlighterModule
 
          Return NewTemplate
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -89,7 +89,7 @@ Public Module CodeHighlighterModule
             Return LoadDocument(NoDialog:=True)
          End If
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -112,7 +112,7 @@ Public Module CodeHighlighterModule
 
          Return Nothing
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
@@ -214,7 +214,7 @@ Public Module CodeHighlighterModule
             DocumentO.Modified = CurrentModifiedState
          End With
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       Finally
          Target.Parent.UseWaitCursor = False
       End Try
@@ -269,7 +269,7 @@ Public Module CodeHighlighterModule
 
          Return NewTemplate
       Catch ExceptionO As Exception
-         HandleError(ExceptionO)
+         DisplayException(ExceptionO)
       End Try
 
       Return Nothing
